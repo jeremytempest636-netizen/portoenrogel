@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jeremy Sibarani — IT Infrastructure & Software Development</title>
+<meta name="description" content="Portfolio of Enrogel Jeremi (Jeremy) Sibarani — Computer Technology graduate specializing in IT infrastructure, application deployment, and software development.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,4 93,27 93,73 50,96 7,73 7,27' fill='none' stroke='%23c9a768' stroke-width='5'/%3E%3Ctext x='50' y='63' font-size='42' text-anchor='middle' fill='%23c9a768' font-family='Georgia'%3EJ%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#06070d;
+    --panel:#0d101b;
+    --panel-2:#141926;
+    --panel-3:#1b2233;
+    --line:rgba(201,167,104,.22);
+    --line-soft:rgba(234,231,220,.09);
+    --gold:#c9a768;
+    --gold-bright:#eccf94;
+    --teal:#5fd0c9;
+    --text:#eae7dc;
+    --text-dim:#96a0b5;
+    --text-faint:#5c637a;
+    --shadow-gold: 0 0 24px rgba(201,167,104,.35);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--void);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.7;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--gold);color:#06070d;}
+  h1,h2,h3,h4,.font-display{font-family:'Cinzel',serif;letter-spacing:.02em;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  button{font-family:inherit;cursor:pointer;background:none;border:none;color:inherit;}
+  .container{max-width:1180px;margin:0 auto;padding:0 28px;}
+  section{position:relative;padding:130px 0;}
+  @media(max-width:720px){section{padding:80px 0;}}
+
+  /* subtle hex-grid texture */
+  .hex-texture{
+    position:absolute;inset:0;pointer-events:none;opacity:.35;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(201,167,104,.05), transparent 45%),
+      radial-gradient(circle at 80% 60%, rgba(95,208,201,.04), transparent 40%);
+  }
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:.78rem;color:var(--gold);
+    font-family:'Cinzel',serif;letter-spacing:.14em;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{content:'';width:22px;height:1px;background:var(--gold);display:inline-block;}
+
+  .section-title{
+    font-size:clamp(1.7rem,3vw,2.5rem);
+    font-weight:600;color:var(--text);margin-bottom:16px;
+  }
+  .section-sub{color:var(--text-dim);max-width:560px;font-size:1rem;}
+  .section-head{margin-bottom:56px;}
+
+  /* ---------- NAVBAR ---------- */
+  #navbar{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    padding:22px 0;transition:all .4s ease;
+    border-bottom:1px solid transparent;
+  }
+  #navbar.scrolled{
+    padding:14px 0;background:rgba(6,7,13,.86);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line-soft);
+  }
+  #navbar .nav-inner{display:flex;align-items:center;justify-content:space-between;}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Cinzel',serif;font-weight:600;font-size:1.05rem;letter-spacing:.06em;color:var(--text);}
+  .brand .mark{width:30px;height:30px;flex:none;}
+  .nav-links{display:flex;gap:34px;list-style:none;}
+  .nav-links a{
+    font-size:.86rem;color:var(--text-dim);letter-spacing:.03em;
+    position:relative;padding:4px 0;transition:color .25s;
+  }
+  .nav-links a::after{
+    content:'';position:absolute;left:0;bottom:-4px;width:0;height:1px;background:var(--gold);
+    transition:width .3s ease;
+  }
+  .nav-links a:hover,.nav-links a.active{color:var(--gold-bright);}
+  .nav-links a.active::after{width:100%;}
+  .nav-cta{
+    border:1px solid var(--gold);color:var(--gold-bright);font-size:.82rem;
+    padding:9px 20px;letter-spacing:.05em;
+    clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);
+    transition:all .3s ease;
+  }
+  .nav-cta:hover{background:var(--gold);color:#0a0b12;box-shadow:var(--shadow-gold);}
+  .hamburger{display:none;flex-direction:column;gap:5px;}
+  .hamburger span{width:24px;height:2px;background:var(--gold-bright);}
+  #mobile-menu{
+    position:fixed;inset:0;background:rgba(6,7,13,.98);z-index:1100;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;
+    transform:translateY(-100%);transition:transform .4s ease;
+  }
+  #mobile-menu.open{transform:translateY(0);}
+  #mobile-menu a{font-family:'Cinzel',serif;font-size:1.3rem;color:var(--text);}
+  #mobile-menu .close-btn{position:absolute;top:26px;right:28px;font-size:1.8rem;color:var(--gold);}
+  @media(max-width:860px){
+    .nav-links,.nav-cta{display:none;}
+    .hamburger{display:flex;}
+  }
+
+  /* ---------- HERO ---------- */
+  #hero{
+    min-height:100vh;display:flex;align-items:center;position:relative;
+    padding-top:120px;
+    background:
+      radial-gradient(ellipse 90% 60% at 50% -10%, rgba(201,167,104,.10), transparent 60%),
+      linear-gradient(180deg,#06070d 0%,#080a13 60%,#06070d 100%);
+    overflow:hidden;
+  }
+  #star-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;}
+  .hero-grid{
+    position:relative;z-index:2;
+    display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;
+  }
+  @media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr;text-align:center;}
+    .hero-grid>div:first-child{order:2;}
+    .hero-emblem{order:1;}
+    .hero-desc{margin-left:auto;margin-right:auto;}
+    .hero-actions,.hero-socials{justify-content:center;}
+  }
+  .hero-kicker{
+    font-family:'Cinzel',serif;color:var(--gold);letter-spacing:.22em;font-size:.82rem;
+    margin-bottom:22px;
+  }
+  .hero-name{
+    font-size:clamp(2.6rem,6.4vw,4.6rem);font-weight:700;line-height:1.05;
+    color:var(--text);
+  }
+  .hero-name em{font-style:normal;color:var(--gold-bright);}
+  .hero-role{
+    font-size:clamp(1.05rem,2vw,1.35rem);color:var(--text-dim);font-weight:500;
+    margin-bottom:26px;letter-spacing:.01em;
+  }
+  .hero-role .divider{display:inline-block;width:34px;height:1px;background:var(--gold);vertical-align:middle;margin:0 12px;}
+  .hero-desc{max-width:520px;color:var(--text-dim);margin-bottom:38px;font-size:1.02rem;}
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:46px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:15px 30px;font-size:.88rem;letter-spacing:.05em;font-weight:600;
+    clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px);
+    transition:all .3s ease;
+  }
+  .btn-primary{background:var(--gold);color:#0a0b12;}
+  .btn-primary:hover{box-shadow:var(--shadow-gold);transform:translateY(-2px);}
+  .btn-ghost{border:1px solid var(--line-soft);color:var(--text);}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold-bright);}
+  .hero-socials{display:flex;gap:18px;}
+  .icon-link{
+    width:42px;height:42px;display:flex;align-items:center;justify-content:center;
+    border:1px solid var(--line-soft);color:var(--text-dim);border-radius:50%;
+    transition:all .3s ease;
+  }
+  .icon-link:hover{border-color:var(--gold);color:var(--gold-bright);box-shadow:var(--shadow-gold);}
+  .icon-link svg{width:18px;height:18px;}
+
+  .hero-emblem{
+    position:relative;display:flex;align-items:center;justify-content:center;
+    aspect-ratio:1;max-width:440px;margin:0 auto;
+  }
+  .emblem-ring{
+    position:absolute;inset:0;border-radius:50%;
+    border:1px solid var(--line);
+    animation:spin 40s linear infinite;
+  }
+  .emblem-ring.r2{inset:34px;border-style:dashed;border-color:rgba(201,167,104,.15);animation-duration:60s;animation-direction:reverse;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .hero-photo{
+    width:76%;aspect-ratio:1;border-radius:50%;
+    object-fit:cover;object-position:center top;
+    border:3px solid var(--gold);
+    box-shadow:var(--shadow-gold), 0 20px 60px rgba(0,0,0,.5);
+    position:relative;z-index:2;
+    background:linear-gradient(150deg,var(--panel-2),var(--panel));
+  }
+  .emblem-badge{
+    position:absolute;bottom:2%;right:6%;z-index:3;
+    width:64px;height:64px;
+    background:linear-gradient(150deg,var(--panel-2),var(--panel));
+    clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+    display:flex;align-items:center;justify-content:center;
+    border:1px solid var(--line);
+    box-shadow:0 6px 20px rgba(0,0,0,.45);
+  }
+  .emblem-badge span{font-family:'Cinzel',serif;font-size:1.15rem;color:var(--gold-bright);}
+  @media(max-width:900px){
+    .hero-emblem{max-width:280px;margin:0 auto 10px;}
+    .emblem-badge{width:46px;height:46px;}
+    .emblem-badge span{font-size:.85rem;}
+  }
+  .scroll-cue{
+    position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:2;
+    display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-faint);
+    font-size:.72rem;letter-spacing:.2em;font-family:'Cinzel',serif;
+  }
+  .scroll-cue .line{width:1px;height:34px;background:linear-gradient(var(--gold),transparent);animation:pulse-line 2s ease-in-out infinite;}
+  @keyframes pulse-line{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+  /* ---------- QUICK STATS ---------- */
+  #stats{padding:64px 0;border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);background:var(--panel);}
+  .stats-row{display:grid;grid-template-columns:repeat(4,1fr);}
+  .stat{text-align:center;padding:0 12px;position:relative;}
+  .stat:not(:last-child)::after{content:'';position:absolute;right:0;top:10%;height:80%;width:1px;background:var(--line-soft);}
+  .stat-num{font-family:'Cinzel',serif;font-size:clamp(1.8rem,3.4vw,2.6rem);color:var(--gold-bright);font-weight:600;}
+  .stat-label{color:var(--text-dim);font-size:.82rem;margin-top:6px;letter-spacing:.02em;}
+  @media(max-width:720px){.stats-row{grid-template-columns:repeat(2,1fr);row-gap:30px;}.stat:nth-child(2)::after{display:none;}}
+
+  /* reveal on scroll */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:64px;align-items:start;}
+  @media(max-width:820px){.about-grid{grid-template-columns:1fr;gap:36px;}}
+  .about-card{
+    background:var(--panel);border:1px solid var(--line-soft);padding:34px;
+  }
+  .about-card dl{display:grid;grid-template-columns:auto 1fr;gap:14px 18px;font-size:.92rem;}
+  .about-card dt{color:var(--text-faint);font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.08em;padding-top:2px;}
+  .about-card dd{color:var(--text);}
+  .about-text p{color:var(--text-dim);margin-bottom:18px;font-size:1.02rem;}
+  .about-text strong{color:var(--text);font-weight:600;}
+
+  /* ---------- CAREER FOCUS (tabs) ---------- */
+  .focus-wrap{display:grid;grid-template-columns:.85fr 1.15fr;gap:0;border:1px solid var(--line-soft);}
+  @media(max-width:800px){.focus-wrap{grid-template-columns:1fr;}}
+  .focus-tabs{border-right:1px solid var(--line-soft);}
+  @media(max-width:800px){.focus-tabs{border-right:none;border-bottom:1px solid var(--line-soft);}}
+  .focus-tab{
+    display:flex;align-items:center;gap:18px;padding:26px 30px;cursor:pointer;
+    border-bottom:1px solid var(--line-soft);position:relative;transition:background .3s;
+  }
+  .focus-tab:last-child{border-bottom:none;}
+  .focus-tab .fnum{font-family:'Cinzel',serif;color:var(--text-faint);font-size:1.1rem;transition:color .3s;}
+  .focus-tab .flabel{font-weight:600;color:var(--text-dim);transition:color .3s;}
+  .focus-tab.active{background:var(--panel);}
+  .focus-tab.active .fnum,.focus-tab.active .flabel{color:var(--gold-bright);}
+  .focus-tab.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold);}
+  .focus-panel{padding:44px;display:none;background:var(--panel-2);}
+  .focus-panel.active{display:block;}
+  .focus-panel h3{font-size:1.5rem;margin-bottom:12px;color:var(--gold-bright);}
+  .focus-panel p{color:var(--text-dim);margin-bottom:20px;}
+  .chip-row{display:flex;flex-wrap:wrap;gap:10px;}
+  .chip{
+    padding:7px 16px;font-size:.8rem;border:1px solid var(--line);color:var(--text);
+    background:rgba(201,167,104,.06);
+  }
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);}
+  @media(max-width:900px){.skills-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:600px){.skills-grid{grid-template-columns:1fr;}}
+  .skill-cell{background:var(--panel);padding:30px 28px;}
+  .skill-cell h4{font-size:1rem;color:var(--gold-bright);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+  .skill-cell h4 .dot{width:6px;height:6px;background:var(--gold);transform:rotate(45deg);flex:none;}
+  .skill-tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .skill-tags span{font-size:.78rem;color:var(--text-dim);border:1px solid var(--line-soft);padding:5px 11px;}
+
+  /* ---------- EXPERIENCE ---------- */
+  .exp-card{border:1px solid var(--line-soft);background:var(--panel);display:grid;grid-template-columns:.55fr 1.45fr;}
+  @media(max-width:820px){.exp-card{grid-template-columns:1fr;}}
+  .exp-side{padding:40px;border-right:1px solid var(--line-soft);background:var(--panel-2);}
+  @media(max-width:820px){.exp-side{border-right:none;border-bottom:1px solid var(--line-soft);}}
+  .exp-side .role{font-family:'Cinzel',serif;color:var(--gold-bright);font-size:1.3rem;margin-bottom:8px;}
+  .exp-side .org{color:var(--text);font-weight:600;margin-bottom:4px;}
+  .exp-side .meta{color:var(--text-faint);font-size:.85rem;}
+  .exp-main{padding:40px;}
+  .exp-main .proj-name{color:var(--text);font-weight:600;margin-bottom:14px;}
+  .exp-main ul{list-style:none;display:grid;gap:11px;}
+  .exp-main li{display:flex;gap:12px;color:var(--text-dim);font-size:.94rem;}
+  .exp-main li::before{content:'';width:6px;height:6px;margin-top:7px;background:var(--gold);flex:none;transform:rotate(45deg);}
+
+  /* ---------- PROJECTS ---------- */
+  .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+  @media(max-width:940px){.proj-grid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:640px){.proj-grid{grid-template-columns:1fr;}}
+  .proj-card{
+    border:1px solid var(--line-soft);background:var(--panel);cursor:pointer;
+    transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease;
+    display:flex;flex-direction:column;
+  }
+  .proj-card:hover{transform:translateY(-6px);border-color:var(--gold);box-shadow:0 20px 40px -20px rgba(201,167,104,.35);}
+  .proj-art{height:170px;position:relative;overflow:hidden;}
+  .proj-art::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(6,7,13,.85));}
+  .proj-art .art-tag{
+    position:absolute;bottom:12px;left:14px;z-index:2;font-size:.72rem;letter-spacing:.08em;
+    color:var(--gold-bright);font-family:'Cinzel',serif;
+  }
+  .art-1{background:linear-gradient(135deg,#1a2a3d,#0d101b 70%),radial-gradient(circle at 70% 30%,rgba(95,208,201,.35),transparent 60%);}
+  .art-2{background:linear-gradient(135deg,#241a3d,#0d101b 70%),radial-gradient(circle at 30% 70%,rgba(201,167,104,.4),transparent 60%);}
+  .art-3{background:linear-gradient(135deg,#3d1a24,#0d101b 70%),radial-gradient(circle at 60% 40%,rgba(201,120,90,.35),transparent 60%);}
+  .art-4{background:linear-gradient(135deg,#1a2f3d,#0d101b 70%),radial-gradient(circle at 40% 35%,rgba(95,208,201,.3),transparent 60%);}
+  .art-5{background:linear-gradient(135deg,#2a3d1a,#0d101b 70%),radial-gradient(circle at 65% 60%,rgba(160,201,95,.32),transparent 60%);}
+  .proj-body{padding:24px;flex:1;display:flex;flex-direction:column;}
+  .proj-cat{color:var(--gold);font-size:.72rem;letter-spacing:.1em;font-family:'Cinzel',serif;margin-bottom:8px;}
+  .proj-title{font-weight:600;color:var(--text);margin-bottom:10px;font-size:1.05rem;}
+  .proj-desc{color:var(--text-dim);font-size:.88rem;margin-bottom:16px;flex:1;}
+  .proj-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+  .proj-tags span{font-size:.7rem;color:var(--text-faint);border:1px solid var(--line-soft);padding:3px 9px;}
+  .proj-more{color:var(--gold-bright);font-size:.82rem;font-weight:600;display:flex;align-items:center;gap:6px;}
+
+  /* modal */
+  #project-modal{
+    position:fixed;inset:0;z-index:1200;display:none;align-items:center;justify-content:center;
+    padding:24px;
+  }
+  #project-modal.open{display:flex;}
+  .modal-backdrop{position:absolute;inset:0;background:rgba(4,5,9,.86);backdrop-filter:blur(4px);}
+  .modal-box{
+    position:relative;z-index:2;max-width:680px;width:100%;max-height:86vh;overflow-y:auto;
+    background:var(--panel-2);border:1px solid var(--gold);padding:44px;
+    animation:modal-in .35s ease;
+  }
+  @keyframes modal-in{from{opacity:0;transform:translateY(14px) scale(.98);}to{opacity:1;transform:translateY(0) scale(1);}}
+  .modal-close{position:absolute;top:18px;right:18px;font-size:1.4rem;color:var(--text-dim);}
+  .modal-close:hover{color:var(--gold-bright);}
+  .modal-box .proj-cat{margin-bottom:6px;}
+  .modal-box h3{font-size:1.5rem;color:var(--text);margin-bottom:20px;}
+  .modal-section{margin-bottom:20px;}
+  .modal-section h5{font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:.1em;color:var(--gold);margin-bottom:7px;}
+  .modal-section p{color:var(--text-dim);font-size:.94rem;}
+
+  /* ---------- EDUCATION TIMELINE ---------- */
+  .timeline{position:relative;padding-left:40px;}
+  .timeline::before{content:'';position:absolute;left:8px;top:6px;bottom:6px;width:1px;background:var(--line-soft);}
+  .timeline .tprogress{position:absolute;left:8px;top:6px;width:1px;background:var(--gold);height:0;transition:height .2s ease-out;box-shadow:0 0 8px var(--gold);}
+  .t-item{position:relative;padding-bottom:44px;}
+  .t-item:last-child{padding-bottom:0;}
+  .t-item::before{
+    content:'';position:absolute;left:-40px;top:2px;width:15px;height:15px;
+    background:var(--void);border:1px solid var(--line);transform:rotate(45deg);
+  }
+  .t-item.major::before{border-color:var(--gold);background:var(--gold);box-shadow:var(--shadow-gold);}
+  .t-year{color:var(--gold);font-family:'Cinzel',serif;font-size:.82rem;letter-spacing:.05em;margin-bottom:6px;}
+  .t-title{font-weight:600;color:var(--text);margin-bottom:4px;}
+  .t-sub{color:var(--text-dim);font-size:.88rem;}
+
+  /* ---------- CERTIFICATES ---------- */
+  .cert-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  @media(max-width:920px){.cert-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.cert-grid{grid-template-columns:1fr;}}
+  .cert-card{
+    display:block;
+    border:1px solid var(--line-soft);background:var(--panel);padding:20px 18px;text-align:center;
+    transition:border-color .3s,transform .3s;
+    height: 100%;
+    cursor: pointer;
+  }
+  .cert-card:hover{border-color:var(--gold);transform:translateY(-4px);}
+  
+  /* Styling gambar agar pas, rapi & seragam */
+  .cert-img-wrapper{
+    width: 100%;
+    height: 160px;
+    margin-bottom: 14px;
+    overflow: hidden;
+    border-radius: 4px;
+    background: var(--panel-2);
+    border: 1px solid var(--line-soft);
+  }
+  .cert-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform .3s ease;
+  }
+  .cert-card:hover .cert-img{
+    transform: scale(1.05);
+  }
+
+  .cert-badge{
+    width:42px;height:42px;margin:0 auto 12px;border:1px solid var(--gold);
+    clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+    display:flex;align-items:center;justify-content:center;color:var(--gold-bright);
+    font-size: 0.82rem;
+  }
+  .cert-name{font-weight:600;font-size:.92rem;margin-bottom:6px;color:var(--text);}
+  .cert-issuer{color:var(--text-faint);font-size:.78rem;}
+
+  /* Modal Popup khusus Gambar Sertifikat */
+  #cert-modal {
+    position: fixed; inset: 0; z-index: 1300; display: none;
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  #cert-modal.open { display: flex; }
+  .cert-modal-box {
+    position: relative; z-index: 2; max-width: 90vw; max-height: 90vh;
+    display: flex; flex-direction: column; align-items: center;
+    animation: modal-in .3s ease;
+  }
+  .cert-modal-img {
+    max-width: 100%; max-height: 80vh; object-fit: contain;
+    border: 2px solid var(--gold); box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    border-radius: 4px;
+  }
+  .cert-modal-caption {
+    margin-top: 14px; color: var(--gold-bright); font-family: 'Cinzel', serif;
+    font-size: 1rem; text-align: center;
+  }
+
+  /* ---------- HIGHLIGHTS + ORG + SOFT SKILLS ---------- */
+  .three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+  @media(max-width:900px){.three-col{grid-template-columns:1fr;}}
+  .info-card{border:1px solid var(--line-soft);background:var(--panel);padding:30px;}
+  .info-card h4{font-family:'Cinzel',serif;color:var(--gold-bright);font-size:1rem;margin-bottom:16px;}
+  .info-card ul{list-style:none;display:grid;gap:10px;}
+  .info-card li{color:var(--text-dim);font-size:.9rem;display:flex;gap:10px;}
+  .info-card li::before{content:'—';color:var(--gold);flex:none;}
+  .tag-cloud{display:flex;flex-wrap:wrap;gap:9px;}
+  .tag-cloud span{font-size:.8rem;color:var(--text-dim);border:1px solid var(--line-soft);padding:6px 13px;}
+  .lang-gauge{margin-bottom:18px;}
+  .lang-gauge .lg-top{display:flex;justify-content:space-between;font-size:.85rem;margin-bottom:6px;}
+  .lang-gauge .lg-top span:first-child{color:var(--text);font-weight:600;}
+  .lang-gauge .lg-top span:last-child{color:var(--gold);}
+  .lg-track{height:4px;background:var(--panel-3);position:relative;}
+  .lg-fill{height:100%;background:var(--gold);width:0;transition:width 1.2s ease;}
+
+  /* ---------- RESUME CTA ---------- */
+  #resume-cta{
+    text-align:center;
+    background:radial-gradient(ellipse 70% 100% at 50% 0%, rgba(201,167,104,.12), transparent 65%),var(--panel);
+    border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);
+  }
+  #resume-cta h2{margin-bottom:14px;}
+  #resume-cta p{color:var(--text-dim);max-width:460px;margin:0 auto 34px;}
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
+  @media(max-width:820px){.contact-grid{grid-template-columns:1fr;gap:36px;}}
+  .contact-list{display:grid;gap:2px;background:var(--line-soft);border:1px solid var(--line-soft);}
+  .contact-row{
+    display:flex;align-items:center;gap:16px;padding:20px 22px;background:var(--panel);
+    transition:background .3s;
+  }
+  .contact-row:hover{background:var(--panel-2);}
+  .contact-row .cr-icon{
+    width:38px;height:38px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;
+    color:var(--gold-bright);flex:none;
+  }
+  .contact-row .cr-icon svg{width:16px;height:16px;}
+  .contact-row .cr-label{color:var(--text-faint);font-size:.72rem;letter-spacing:.08em;font-family:'Cinzel',serif;}
+  .contact-row .cr-value{color:var(--text);font-size:.95rem;}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:50px 0 34px;border-top:1px solid var(--line-soft);}
+  .footer-inner{display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;}
+  .footer-inner .brand{justify-content:center;}
+  .footer-tag{color:var(--text-faint);font-size:.85rem;}
+  .footer-copy{color:var(--text-faint);font-size:.78rem;margin-top:8px;}
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="#hero" class="brand">
+      <svg class="mark" viewBox="0 0 100 100"><polygon points="50,4 93,27 93,73 50,96 7,73 7,27" fill="none" stroke="#c9a768" stroke-width="5"/><text x="50" y="63" font-size="42" text-anchor="middle" fill="#c9a768" font-family="Georgia">J</text></svg>
+      JEREMY SIBARANI
+    </a>
+    <ul class="nav-links">
+      <li><a href="#hero" class="nav-link" data-target="hero">Home</a></li>
+      <li><a href="#about" class="nav-link" data-target="about">About</a></li>
+      <li><a href="#skills" class="nav-link" data-target="skills">Skills</a></li>
+      <li><a href="#experience" class="nav-link" data-target="experience">Experience</a></li>
+      <li><a href="#projects" class="nav-link" data-target="projects">Projects</a></li>
+      <li><a href="#education" class="nav-link" data-target="education">Education</a></li>
+      <li><a href="#contact" class="nav-link" data-target="contact">Contact</a></li>
+    </ul>
+    <a href="assets/CV_Enrogel_Jeremi_Sibarani.pdf" class="nav-cta" id="nav-download" download="CV_Enrogel_Jeremi_Sibarani.pdf">Download CV</a>
+    <button class="hamburger" id="hamburger-btn" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div id="mobile-menu">
+  <button class="close-btn" id="mobile-close">&times;</button>
+  <a href="#hero" class="mlink">Home</a>
+  <a href="#about" class="mlink">About</a>
+  <a href="#skills" class="mlink">Skills</a>
+  <a href="#experience" class="mlink">Experience</a>
+  <a href="#projects" class="mlink">Projects</a>
+  <a href="#education" class="mlink">Education</a>
+  <a href="#contact" class="mlink">Contact</a>
+</div>
+
+<!-- ============ HERO ============ -->
+<section id="hero">
+  <canvas id="star-canvas"></canvas>
+  <div class="container hero-grid">
+    <div>
+      <div class="hero-kicker">COMPUTER TECHNOLOGY GRADUATE</div>
+      <h1 class="hero-name">Enrogel Jeremi<br><em>Sibarani</em></h1>
+      <div class="hero-role">IT Infrastructure<span class="divider"></span>Software Development</div>
+      <p class="hero-desc">Computer Technology graduate from Institut Teknologi Del with hands-on experience in IT infrastructure, application deployment, Docker, Linux, networking, and web development.</p>
+      <div class="hero-actions">
+        <a href="assets/CV_Enrogel_Jeremi_Sibarani.pdf" class="btn btn-primary" id="hero-download" download="CV_Enrogel_Jeremi_Sibarani.pdf">Download CV</a>
+        <a href="#projects" class="btn btn-ghost">View Projects</a>
+      </div>
+      <div class="hero-socials">
+        <a class="icon-link" href="https://github.com/jeremytempest636-netizen" title="GitHub" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.4 7.86 10.93.57.1.78-.25.78-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.75.4-1.27.73-1.56-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 015.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.24 2.75.12 3.04.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.08.78 2.18v3.23c0 .3.21.66.79.55A10.52 10.52 0 0023.5 12c0-6.35-5.15-11.5-11.5-11.5z"/></svg></a>
+        <a class="icon-link" href="https://www.linkedin.com/in/enrogel-jeremy-sibarani-1bba13389" title="LinkedIn" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.15 1.45-2.15 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.27 2.38 4.27 5.47v6.27zM5.34 7.43a2.07 2.07 0 110-4.14 2.07 2.07 0 010 4.14zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
+        <a class="icon-link" href="mailto:sibaranienrogel@gmail.com" title="Email" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="4.5" width="19" height="15" rx="1.5"/><path d="M3 6l9 7 9-7"/></svg></a>
+        <a class="icon-link" href="https://wa.me/6282161795515" title="WhatsApp" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.02 2C6.5 2 2.03 6.47 2.03 12c0 1.83.5 3.55 1.36 5.03L2 22l5.1-1.34A9.94 9.94 0 0012.02 22C17.55 22 22 17.53 22 12S17.55 2 12.02 2zm5.85 14.15c-.25.7-1.45 1.34-2 1.42-.53.08-1.16.11-1.87-.12-.43-.14-.98-.32-1.69-.63-2.97-1.28-4.9-4.27-5.05-4.47-.15-.2-1.2-1.6-1.2-3.05s.76-2.17 1.03-2.47c.27-.3.6-.37.8-.37h.57c.18 0 .43-.07.66.5.25.6.86 2.08.94 2.23.08.15.13.33.02.53-.1.2-.16.32-.31.5-.15.18-.32.4-.46.53-.15.15-.31.31-.13.61.18.3.8 1.32 1.72 2.13 1.18 1.05 2.18 1.38 2.48 1.53.3.15.48.13.65-.08.18-.2.75-.87.95-1.17.2-.3.4-.25.66-.15.27.1 1.73.82 2.02.97.3.15.49.22.56.35.08.13.08.75-.17 1.45z"/></svg></a>
+      </div>
+    </div>
+    <div class="hero-emblem">
+      <div class="emblem-ring"></div>
+      <div class="emblem-ring r2"></div>
+      <img src="me.jpeg" alt="Enrogel Jeremi Sibarani" class="hero-photo">
+      <div class="emblem-badge"><span>EJS</span></div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>SCROLL</span><span class="line"></span></div>
+</section>
+
+<!-- ============ QUICK STATS ============ -->
+<section id="stats">
+  <div class="container stats-row">
+    <div class="stat"><div class="stat-num" data-count="1">0</div><div class="stat-label">Internship</div></div>
+    <div class="stat"><div class="stat-num" data-count="4" data-suffix="+">0</div><div class="stat-label">Projects Delivered</div></div>
+    <div class="stat"><div class="stat-num" data-count="12">0</div><div class="stat-label">Certificates</div></div>
+    <div class="stat"><div class="stat-num" data-count="1">0</div><div class="stat-label">Degree — D3 Teknologi Komputer</div></div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="hex-texture"></div>
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">About</div>
+      <h2 class="section-title">Who I am</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-card reveal">
+        <dl>
+          <dt>Name</dt><dd>Enrogel Jeremi Sibarani</dd>
+          <dt>Education</dt><dd>D3 Teknologi Komputer</dd>
+          <dt>Institution</dt><dd>Institut Teknologi Del</dd>
+          <dt>Status</dt><dd>Graduate</dd>
+          <dt>Focus</dt><dd>IT Infrastructure &amp; Software Development</dd>
+          <dt>Location</dt><dd>Indonesia</dd>
+        </dl>
+      </div>
+      <div class="about-text reveal">
+        <p>I am a <strong>Computer Technology graduate</strong> from Institut Teknologi Del with an interest in IT infrastructure, software development, application deployment, and cybersecurity.</p>
+        <p>During my academic journey and internship experience, I worked with technologies such as <strong>Linux, Docker, networking, server administration, web development, and virtualization</strong>.</p>
+        <p>I enjoy learning through hands-on projects and solving technical problems, especially in areas related to infrastructure and application deployment — turning fundamentals into systems that actually run in production.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CAREER FOCUS ============ -->
+<section id="focus" style="background:var(--panel);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Career Focus</div>
+      <h2 class="section-title">Where I bring the most value</h2>
+      <p class="section-sub">Three areas, one direction — infrastructure and development that work together.</p>
+    </div>
+    <div class="focus-wrap reveal">
+      <div class="focus-tabs">
+        <div class="focus-tab active" data-focus="1">
+          <span class="fnum">01</span><span class="flabel">IT Infrastructure</span>
+        </div>
+        <div class="focus-tab" data-focus="2">
+          <span class="fnum">02</span><span class="flabel">Software Development</span>
+        </div>
+        <div class="focus-tab" data-focus="3">
+          <span class="fnum">03</span><span class="flabel">Networking &amp; Security</span>
+        </div>
+      </div>
+      <div>
+        <div class="focus-panel active" data-panel="1">
+          <h3>IT Infrastructure</h3>
+          <p>Deploying and maintaining containerized applications and Linux-based environments, from image to running service.</p>
+          <div class="chip-row"><span class="chip">Linux</span><span class="chip">Docker</span><span class="chip">Server</span><span class="chip">Deployment</span></div>
+        </div>
+        <div class="focus-panel" data-panel="2">
+          <h3>Software Development</h3>
+          <p>Building web applications and backend services, from static sites to API-driven systems.</p>
+          <div class="chip-row"><span class="chip">Web</span><span class="chip">Backend</span><span class="chip">APIs</span><span class="chip">Programming</span></div>
+        </div>
+        <div class="focus-panel" data-panel="3">
+          <h3>Networking &amp; Security</h3>
+          <p>Understanding network fundamentals and server administration with security concepts applied throughout.</p>
+          <div class="chip-row"><span class="chip">Networking</span><span class="chip">Server Administration</span><span class="chip">Cybersecurity Fundamentals</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section id="skills">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Skills</div>
+      <h2 class="section-title">Toolkit</h2>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-cell">
+        <h4><span class="dot"></span>Programming</h4>
+        <div class="skill-tags"><span>C</span><span>Java</span><span>JavaScript</span><span>PHP</span><span>Python</span><span>Dart</span></div>
+      </div>
+
+      <div class="skill-cell">
+        <h4><span class="dot"></span>Web Development</h4>
+        <div class="skill-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Next.js</span><span>Laravel</span><span>Backend Development</span><span>REST API</span><span>JSON</span></div>
+      </div>
+
+      <div class="skill-cell">
+        <h4><span class="dot"></span>Infrastructure</h4>
+        <div class="skill-tags"><span>Docker</span><span>Docker Compose</span><span>Linux</span><span>Nginx</span><span>Server Administration</span><span>App Deployment</span><span>Virtualization</span><span>KVM</span><span>oVirt</span><span>VirtualBox</span></div>
+      </div>
+
+      <div class="skill-cell">
+        <h4><span class="dot"></span>Networking</h4>
+        <div class="skill-tags"><span>Network Configuration</span><span>TCP/IP</span><span>Basic Network Admin</span><span>Server Networking</span></div>
+      </div>
+
+      <div class="skill-cell">
+        <h4><span class="dot"></span>Database</h4>
+        <div class="skill-tags"><span>MySQL</span><span>MongoDB</span><span>SQL</span></div>
+      </div>
+
+      <div class="skill-cell">
+        <h4><span class="dot"></span>Cybersecurity</h4>
+        <div class="skill-tags"><span>Fundamentals</span><span>Security Concepts</span><span>Server Security</span><span>Network Security</span><span>Git</span><span>GitHub</span><span>Postman</span><span>Flutter</span><span>Android Development</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section id="experience" style="background:var(--panel);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Experience</div>
+      <h2 class="section-title">On the job</h2>
+    </div>
+    <div class="exp-card reveal">
+      <div class="exp-side">
+        <div class="role">Internship</div>
+        <div class="org">PT Telkom Indonesia</div>
+        <div class="meta">Jakarta Selatan</div>
+      </div>
+      <div class="exp-main">
+        <div class="proj-name">Deploying a Complete Application Using Docker Compose</div>
+        <ul>
+          <li>Learning and implementing containerization using Docker</li>
+          <li>Creating Dockerfiles and building Docker images</li>
+          <li>Managing Docker containers and configuring application ports</li>
+          <li>Running applications using Docker Compose</li>
+          <li>Troubleshooting Docker environment issues</li>
+          <li>Documenting progress through Trello</li>
+          <li>Presenting project progress during internship sessions</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projects">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Projects</div>
+      <h2 class="section-title">Selected work</h2>
+      <p class="section-sub">Click a card for the full breakdown — problem, solution, and result.</p>
+    </div>
+    <div class="proj-grid reveal">
+
+      <div class="proj-card" data-project="docker">
+        <div class="proj-art art-1"><span class="art-tag">DevOps / Infrastructure</span></div>
+        <div class="proj-body">
+          <div class="proj-cat">DevOps · Infrastructure</div>
+          <div class="proj-title">Complete Application Deployment with Docker Compose</div>
+          <div class="proj-desc">Deployed a full web application with container configuration, image creation, port mapping, and orchestration.</div>
+          <div class="proj-tags"><span>Docker</span><span>Docker Compose</span><span>Nginx</span><span>Linux</span></div>
+          <div class="proj-more">View details →</div>
+        </div>
+      </div>
+
+      <div class="proj-card" data-project="chili">
+        <div class="proj-art art-2"><span class="art-tag">AI / Machine Learning</span></div>
+        <div class="proj-body">
+          <div class="proj-cat">Artificial Intelligence · ML</div>
+          <div class="proj-title">Automated Chili Classification &amp; Production Estimation</div>
+          <div class="proj-desc">Deep learning system for chili classification and production estimation, delivered through a mobile app.</div>
+          <div class="proj-tags"><span>Python</span><span>CNN</span><span>Flask</span><span>Flutter</span></div>
+          <div class="proj-more">View details →</div>
+        </div>
+      </div>
+
+      <div class="proj-card" data-project="rental">
+        <div class="proj-art art-3"><span class="art-tag">Web Development</span></div>
+        <div class="proj-body">
+          <div class="proj-cat">Web Development</div>
+          <div class="proj-title">HIU Rent A Car Silangit</div>
+          <div class="proj-desc">A production rental-car website with SEO, structured data, and WhatsApp booking integration.</div>
+          <div class="proj-tags"><span>HTML/CSS/JS</span><span>SEO</span><span>GitHub Pages</span></div>
+          <div class="proj-more">View details →</div>
+        </div>
+      </div>
+
+      <div class="proj-card" data-project="solmusic">
+        <div class="proj-art art-4"><span class="art-tag">Web Development</span></div>
+        <div class="proj-body">
+          <div class="proj-cat">Web Development · Front-End</div>
+          <div class="proj-title">Solmusic — Music Streaming Website Interface</div>
+          <div class="proj-desc">A multi-page music website front-end with an in-browser audio player, waveform visualization, and a filterable playlist grid.</div>
+          <div class="proj-tags"><span>HTML/CSS/JS</span><span>jQuery</span><span>jPlayer</span><span>WaveSurfer.js</span></div>
+          <div class="proj-more">View details →</div>
+        </div>
+      </div>
+
+      <div class="proj-card" data-project="myshop">
+        <div class="proj-art art-5"><span class="art-tag">Web Development</span></div>
+        <div class="proj-body">
+          <div class="proj-cat">Web Development · Full-Stack (Front-End)</div>
+          <div class="proj-title">MyShop — E-Commerce Web App</div>
+          <div class="proj-desc">A Next.js e-commerce app with product browsing, cart, checkout, authentication, and an admin panel for product management.</div>
+          <div class="proj-tags"><span>Next.js</span><span>React</span><span>Tailwind CSS</span></div>
+          <div class="proj-more">View details →</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Project modal -->
+<div id="project-modal">
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+  <div class="modal-box" id="modal-box">
+    <button class="modal-close" id="modal-close">&times;</button>
+    <div class="proj-cat" id="m-cat"></div>
+    <h3 id="m-title"></h3>
+    <div class="modal-section"><h5>Overview</h5><p id="m-overview"></p></div>
+    <div class="modal-section"><h5>Problem</h5><p id="m-problem"></p></div>
+    <div class="modal-section"><h5>Solution</h5><p id="m-solution"></p></div>
+    <div class="modal-section"><h5>Technologies</h5><div class="chip-row" id="m-tech"></div></div>
+    <div class="modal-section"><h5>Result</h5><p id="m-result"></p></div>
+  </div>
+</div>
+
+<!-- ============ EDUCATION TIMELINE ============ -->
+<section id="education" style="background:var(--panel);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Education</div>
+      <h2 class="section-title">Academic journey</h2>
+    </div>
+    <div class="timeline reveal" id="timeline">
+      <div class="tprogress" id="tprogress"></div>
+      <div class="t-item major">
+        <div class="t-year">2023 — 2026</div>
+        <div class="t-title">D3 Teknologi Komputer</div>
+        <div class="t-sub">Institut Teknologi Del · GPA 3.07 / 4.00</div>
+      </div>
+      <div class="t-item">
+        <div class="t-year">2019 — 2022</div>
+        <div class="t-title">SMA N 1 Tarutung</div>
+        <div class="t-sub">Senior High School</div>
+      </div>
+      <div class="t-item">
+        <div class="t-year">2016 — 2019</div>
+        <div class="t-title">SMP N 2 Tarutung</div>
+        <div class="t-sub">Junior High School</div>
+      </div>
+      <div class="t-item">
+        <div class="t-year">2010 — 2016</div>
+        <div class="t-title">SD 173105 Tarutung</div>
+        <div class="t-sub">Elementary School</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CERTIFICATES ============ -->
+<section id="certificates">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Certificates</div>
+      <h2 class="section-title">Verified learning</h2>
+    </div>
+    <div class="cert-grid reveal">
+
+      <div class="cert-card cert-clickable" data-img="dasar ai.png" data-title="Belajar Dasar AI">
+        <div class="cert-img-wrapper">
+          <img src="dasar ai.png" alt="Sertifikat Belajar Dasar AI" class="cert-img">
+        </div>
+        <div class="cert-badge">AI</div>
+        <div class="cert-name">Belajar Dasar AI</div>
+        <div class="cert-issuer">Dicoding · 2025</div>
+      </div>
+
+      <div class="cert-card cert-clickable" data-img="c.png" data-title="Memulai Pemrograman Dengan C">
+        <div class="cert-img-wrapper">
+          <img src="c.png" alt="Sertifikat Pemrograman C" class="cert-img">
+        </div>
+        <div class="cert-badge">C</div>
+        <div class="cert-name">Memulai Pemrograman Dengan C</div>
+        <div class="cert-issuer">Dicoding · 2025</div>
+      </div>
+
+      <div class="cert-card cert-clickable" data-img="memulai java.png" data-title="Memulai Pemrograman Dengan Java">
+        <div class="cert-img-wrapper">
+          <img src="memulai java.png" alt="Sertifikat Pemrograman Java" class="cert-img">
+        </div>
+        <div class="cert-badge">J</div>
+        <div class="cert-name">Memulai Pemrograman Dengan Java</div>
+        <div class="cert-issuer">Dicoding · 2025</div>
+      </div>
+
+      <div class="cert-card cert-clickable" data-img="toefl1.png" data-title="TOEFL (2025)">
+        <div class="cert-img-wrapper">
+          <img src="toefl1.png" alt="Sertifikat TOEFL 2025" class="cert-img">
+        </div>
+        <div class="cert-badge">Tf</div>
+        <div class="cert-name">TOEFL (2025)</div>
+        <div class="cert-issuer">Score: 583</div>
+      </div>
+
+      <div class="cert-card cert-clickable" data-img="toefl2.png" data-title="TOEFL (2026)">
+        <div class="cert-img-wrapper">
+          <img src="toefl2.png" alt="Sertifikat TOEFL 2026" class="cert-img">
+        </div>
+        <div class="cert-badge">Tf</div>
+        <div class="cert-name">TOEFL (2026)</div>
+        <div class="cert-issuer">Score: 487</div>
+      </div>
+
+      <div class="cert-card cert-clickable" data-img="solid.png" data-title="Belajar Prinsip Pemrograman SOLID">
+        <div class="cert-img-wrapper">
+          <img src="solid.png" alt="Sertifikat Pemrograman SOLID" class="cert-img">
+        </div>
+        <div class="cert-badge">S</div>
+        <div class="cert-name">Belajar Prinsip Pemrograman SOLID</div>
+        <div class="cert-issuer">Dicoding · 2025</div>
+      </div>
+
+      <div class="cert-card cert-clickable" data-img="haskell.png" data-title="Memulai Pemrograman dengan Haskell">
+        <div class="cert-img-wrapper">
+          <img src="haskell.png" alt="Pemrograman dengan Haskell" class="cert-img">
+        </div>
+        <div class="cert-badge">H</div>
+        <div class="cert-name">Memulai Pemrograman dengan Haskell</div>
+        <div class="cert-issuer">Dicoding · 2025</div>
+      </div>
+
+      <div class="cert-card cert-clickable" data-img="manajeman proyek.png" data-title="Belajar Dasar Manajemen Proyek">
+        <div class="cert-img-wrapper">
+          <img src="manajeman proyek.png" alt="Belajar Dasar Manajemen Proyek" class="cert-img">
+        </div>
+        <div class="cert-badge">MP</div>
+        <div class="cert-name">Belajar Dasar Manajemen Proyek</div>
+        <div class="cert-issuer">Dicoding · 2025</div>
+      </div>
+
+      <div class="cert-card cert-clickable" data-img="open tofu.png" data-title="Getting Started with OpenTofu">
+        <div class="cert-img-wrapper">
+          <img src="open tofu.png" alt="Linux Foundation" class="cert-img">
+        </div>
+        <div class="cert-badge">OT</div>
+        <div class="cert-name">Getting Started with OpenTofu</div>
+        <div class="cert-issuer">The Linux Foundation · 2025</div>
+      </div>
+
+      <div class="cert-card cert-clickable" data-img="python fundamental.png" data-title="Python Fundamental">
+        <div class="cert-img-wrapper">
+          <img src="python fundamental.png" alt="Sertifikat Python Fundamental" class="cert-img">
+        </div>
+        <div class="cert-badge">PF</div>
+        <div class="cert-name">Python Fundamental</div>
+        <div class="cert-issuer">Aguna course · 2025</div>
+      </div>
+
+      <div class="cert-card cert-clickable" data-img="vm fundamental.png" data-title="Virtual Machine Fundamental">
+        <div class="cert-img-wrapper">
+          <img src="vm fundamental.png" alt="Sertifikat Virtual Machine Fundamental" class="cert-img">
+        </div>
+        <div class="cert-badge">VM</div>
+        <div class="cert-name">Virtual Machine Fundamental</div>
+        <div class="cert-issuer">Aguna course · 2025</div>
+      </div>
+
+      <div class="cert-card cert-clickable" data-img="linux foundation.png" data-title="Linux Fundamental">
+        <div class="cert-img-wrapper">
+          <img src="linux foundation.png" alt="Sertifikat Linux Fundamental" class="cert-img">
+        </div>
+        <div class="cert-badge">LF</div>
+        <div class="cert-name">Linux Fundamental</div>
+        <div class="cert-issuer">Aguna course · 2025</div>
+      </div>
+
+      <div class="cert-card cert-clickable" data-img="html.png" data-title="HTML Essentials">
+        <div class="cert-img-wrapper">
+          <img src="html.png" alt="Sertifikat HTML Essentials" class="cert-img">
+        </div>
+        <div class="cert-badge">HTML</div>
+        <div class="cert-name">HTML Essentials</div>
+        <div class="cert-issuer">Cisco Networking Academy · 2025</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Certificate Image Modal -->
+<div id="cert-modal">
+  <div class="modal-backdrop" id="cert-modal-backdrop"></div>
+  <div class="cert-modal-box">
+    <button class="modal-close" id="cert-modal-close" style="top:-36px; right:0; color:#fff;">&times;</button>
+    <img src="" alt="Certificate Large Preview" class="cert-modal-img" id="cert-modal-img">
+    <div class="cert-modal-caption" id="cert-modal-caption"></div>
+  </div>
+</div>
+
+<!-- ============ ORG / HIGHLIGHTS / SOFT SKILLS ============ -->
+<section id="more" style="background:var(--panel);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);">
+  <div class="container three-col reveal">
+    <div class="info-card">
+      <h4>Organization</h4>
+      <ul>
+        <li>Member, HIMATEK — Himpunan Mahasiswa Teknologi Komputer</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Highlights</h4>
+      <ul>
+        <li>Completed D3 Teknologi Komputer</li>
+        <li>Completed technical internship at PT Telkom Indonesia</li>
+        <li>Built a Docker Compose deployment project</li>
+        <li>Developed a real-world rental-car website</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Soft Skills</h4>
+      <div class="tag-cloud">
+        <span>Problem Solving</span><span>Troubleshooting</span><span>Communication</span>
+        <span>Teamwork</span><span>Adaptability</span><span>Technical Learning</span>
+        <span>Time Management</span><span>Presentation</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LANGUAGES ============ -->
+<section id="languages">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Languages</div>
+      <h2 class="section-title">Communication</h2>
+    </div>
+    <div class="about-grid reveal" style="grid-template-columns:1fr 1fr;">
+      <div>
+        <div class="lang-gauge">
+          <div class="lg-top"><span>Indonesian</span><span>Native</span></div>
+          <div class="lg-track"><div class="lg-fill" data-fill="100"></div></div>
+        </div>
+        <div class="lang-gauge">
+          <div class="lg-top"><span>English</span><span>Professional Working</span></div>
+          <div class="lg-track"><div class="lg-fill" data-fill="72"></div></div>
+        </div>
+      </div>
+      <div class="about-card" style="align-self:start;">
+        <dl>
+          <dt>TOEFL</dt><dd>Score 583</dd>
+          <dt>Working language</dt><dd>Indonesian / English</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESUME CTA ============ -->
+<section id="resume-cta">
+  <div class="container">
+    <h2 class="font-display section-title">Interested in working together?</h2>
+    <p>Download my complete resume to learn more about my education, experience, skills, and projects.</p>
+    <a href="assets/CV_Enrogel_Jeremi_Sibarani.pdf" class="btn btn-primary" id="cta-download" download="CV_Enrogel_Jeremi_Sibarani.pdf">Download CV</a>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="container contact-grid">
+    <div class="reveal">
+      <div class="eyebrow">Contact</div>
+      <h2 class="section-title">Let's work together</h2>
+      <p class="section-sub">I'm currently open to opportunities in IT infrastructure, software development, and related technology roles.</p>
+    </div>
+    <div class="contact-list reveal">
+      <a class="contact-row" href="mailto:sibaranienrogel@gmail.com">
+        <div class="cr-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="4.5" width="19" height="15" rx="1.5"/><path d="M3 6l9 7 9-7"/></svg></div>
+        <div><div class="cr-label">EMAIL</div><div class="cr-value">sibaranienrogel@gmail.com</div></div>
+      </a>
+
+      <a class="contact-row" href="https://www.linkedin.com/in/enrogel-jeremy-sibarani-1bba13389" target="_blank" rel="noopener noreferrer">
+        <div class="cr-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.15 1.45-2.15 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.27 2.38 4.27 5.47v6.27zM5.34 7.43a2.07 2.07 0 110-4.14 2.07 2.07 0 010 4.14zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></div>
+        <div><div class="cr-label">LINKEDIN</div><div class="cr-value">linkedin.com/in/jeremysibarani</div></div>
+      </a>
+
+      <a class="contact-row" href="https://github.com/jeremytempest636-netizen" target="_blank" rel="noopener noreferrer">
+        <div class="cr-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.4 7.86 10.93.57.1.78-.25.78-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.75.4-1.27.73-1.56-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 015.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.24 2.75.12 3.04.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.08.78 2.18v3.23c0 .3.21.66.79.55A10.52 10.52 0 0023.5 12c0-6.35-5.15-11.5-11.5-11.5z"/></svg></div>
+        <div><div class="cr-label">GITHUB</div><div class="cr-value">github.com/jeremysibarani</div></div>
+      </a>
+
+      <a class="contact-row" href="https://wa.me/6282161795515" target="_blank" rel="noopener noreferrer">
+        <div class="cr-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.02 2C6.5 2 2.03 6.47 2.03 12c0 1.83.5 3.55 1.36 5.03L2 22l5.1-1.34A9.94 9.94 0 0012.02 22C17.55 22 22 17.53 22 12S17.55 2 12.02 2zm5.85 14.15c-.25.7-1.45 1.34-2 1.42-.53.08-1.16.11-1.87-.12-.43-.14-.98-.32-1.69-.63-2.97-1.28-4.9-4.27-5.05-4.47-.15-.2-1.2-1.6-1.2-3.05s.76-2.17 1.03-2.47c.27-.3.6-.37.8-.37h.57c.18 0 .43-.07.66.5.25.6.86 2.08.94 2.23.08.15.13.33.02.53-.1.2-.16.32-.31.5-.15.18-.32.4-.46.53-.15.15-.31.31-.13.61.18.3.8 1.32 1.72 2.13 1.18 1.05 2.18 1.38 2.48 1.53.3.15.48.13.65-.08.18-.2.75-.87.95-1.17.2-.3.4-.25.66-.15.27.1 1.73.82 2.02.97.3.15.49.22.56.35.08.13.08.75-.17 1.45z"/></svg></div>
+        <div><div class="cr-label">WHATSAPP</div><div class="cr-value">+62 821-6179-5515</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container footer-inner">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 100 100"><polygon points="50,4 93,27 93,73 50,96 7,73 7,27" fill="none" stroke="#c9a768" stroke-width="5"/><text x="50" y="63" font-size="42" text-anchor="middle" fill="#c9a768" font-family="Georgia">J</text></svg>
+      JEREMY SIBARANI
+    </div>
+    <div class="footer-tag">IT Infrastructure &amp; Software Development</div>
+    <div class="hero-socials">
+      <a class="icon-link" href="https://github.com/jeremytempest636-netizen" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.4 7.86 10.93.57.1.78-.25.78-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.75.4-1.27.73-1.56-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 015.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.24 2.75.12 3.04.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.08.78 2.18v3.23c0 .3.21.66.79.55A10.52 10.52 0 0023.5 12c0-6.35-5.15-11.5-11.5-11.5z"/></svg></a>
+      <a class="icon-link" href="https://www.linkedin.com/in/enrogel-jeremy-sibarani-1bba13389" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.15 1.45-2.15 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.27 2.38 4.27 5.47v6.27zM5.34 7.43a2.07 2.07 0 110-4.14 2.07 2.07 0 010 4.14zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
+      <a class="icon-link" href="mailto:sibaranienrogel@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="4.5" width="19" height="15" rx="1.5"/><path d="M3 6l9 7 9-7"/></svg></a>
+    </div>
+    <div class="footer-copy">© 2026 Enrogel Jeremi Sibarani. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+// ---------- NAVBAR SCROLL STATE ----------
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// ---------- MOBILE MENU ----------
+const hamburgerBtn = document.getElementById('hamburger-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileClose = document.getElementById('mobile-close');
+hamburgerBtn.addEventListener('click', () => mobileMenu.classList.add('open'));
+mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+document.querySelectorAll('#mobile-menu .mlink').forEach(a => {
+  a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+});
+
+// ---------- ACTIVE NAV LINK ON SCROLL ----------
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.nav-link[data-target="${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-40% 0px -55% 0px' });
+sections.forEach(s => navObserver.observe(s));
+
+// ---------- SCROLL REVEAL ----------
+const revealEls = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+revealEls.forEach(el => revealObserver.observe(el));
+
+// ---------- STAT COUNTERS ----------
+const statNums = document.querySelectorAll('.stat-num');
+const statObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = parseInt(el.dataset.count, 10);
+      const suffix = el.dataset.suffix || '';
+      let cur = 0;
+      const step = Math.max(1, Math.ceil(target / 30));
+      const timer = setInterval(() => {
+        cur += step;
+        if (cur >= target) { cur = target; clearInterval(timer); }
+        el.textContent = cur + suffix;
+      }, 40);
+      statObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.6 });
+statNums.forEach(el => statObserver.observe(el));
+
+// ---------- LANGUAGE GAUGE FILL ----------
+const fills = document.querySelectorAll('.lg-fill');
+const fillObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.width = entry.target.dataset.fill + '%';
+      fillObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+fills.forEach(el => fillObserver.observe(el));
+
+// ---------- CAREER FOCUS TABS ----------
+const focusTabs = document.querySelectorAll('.focus-tab');
+const focusPanels = document.querySelectorAll('.focus-panel');
+focusTabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    focusTabs.forEach(t => t.classList.remove('active'));
+    focusPanels.forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelector(`.focus-panel[data-panel="${tab.dataset.focus}"]`).classList.add('active');
+  });
+});
+
+// ---------- TIMELINE PROGRESS LINE ----------
+const timeline = document.getElementById('timeline');
+const tprogress = document.getElementById('tprogress');
+function updateTimelineProgress(){
+  const rect = timeline.getBoundingClientRect();
+  const vh = window.innerHeight;
+  const total = rect.height;
+  let visible = vh * 0.75 - rect.top;
+  visible = Math.max(0, Math.min(total, visible));
+  tprogress.style.height = visible + 'px';
+}
+window.addEventListener('scroll', updateTimelineProgress);
+window.addEventListener('resize', updateTimelineProgress);
+updateTimelineProgress();
+
+// ---------- PROJECT MODAL ----------
+const projectData = {
+  docker: {
+    cat: 'DevOps · Infrastructure',
+    title: 'Complete Application Deployment with Docker Compose',
+    overview: 'A hands-on infrastructure project focused on packaging and running a complete web application using containerization.',
+    problem: 'Applications deployed manually are hard to reproduce consistently across environments and slow to bring back up after a failure.',
+    solution: 'Built a Dockerfile and Docker Compose configuration to containerize the application, map ports correctly, and bring the full stack up with a single command.',
+    tech: ['Docker', 'Docker Compose', 'Dockerfile', 'Nginx', 'Linux'],
+    result: 'A repeatable deployment workflow: build the image, configure the container, and run the application through Docker Compose with issues resolved through structured troubleshooting.'
+  },
+  chili: {
+    cat: 'Artificial Intelligence · Machine Learning',
+    title: 'Automated Chili Classification and Production Estimation',
+    overview: 'A computer-vision system that classifies chili quality and estimates production output, delivered through a mobile application.',
+    problem: 'Manually sorting and estimating chili harvest output is slow and inconsistent across batches.',
+    solution: 'Trained a CNN-based deep learning model for classification, served predictions through a Flask backend API, and connected the model to a Flutter mobile app for on-the-spot use.',
+    tech: ['Python', 'CNN', 'Deep Learning', 'Flask', 'Flutter', 'Android'],
+    result: 'A working end-to-end pipeline — Flutter app → API → Flask backend → CNN model — that classifies chili and estimates production automatically.'
+  },
+  rental: {
+    cat: 'Web Development',
+    title: 'HIU Rent A Car Silangit',
+    overview: 'A production website for a car rental business, built to be discoverable, fast, and easy to book through.',
+    problem: 'The business needed an online presence that customers could find via search and use to inquire about rentals directly.',
+    solution: 'Built a responsive site with company and rental information, route and pricing details, a WhatsApp call-to-action, SEO optimization, sitemap, canonical tags, and LocalBusiness structured data.',
+    tech: ['HTML', 'CSS', 'JavaScript', 'GitHub Pages', 'SEO', 'Schema.org'],
+    result: 'A live, responsive rental website with working SEO fundamentals and a direct WhatsApp booking path for customers.'
+  },
+  solmusic: {
+    cat: 'Web Development · Front-End',
+    title: 'Solmusic — Music Streaming Website Interface',
+    overview: 'A front-end music website built on the Solmusic (Colorlib) template, featuring artist pages, a blog, a playlist page, and category browsing.',
+    problem: 'Understand and work with a multi-page front-end codebase that combines several third-party JS libraries (audio playback, waveform rendering, filtering, responsive navigation) into one cohesive interface.',
+    solution: 'Assembled and configured the page structure and styling using Bootstrap, integrated jPlayer for in-browser audio playback, WaveSurfer.js for waveform visualization, MixItUp for filterable playlist/category grids, and SlickNav for the mobile navigation menu.',
+    tech: ['HTML', 'CSS/Sass', 'JavaScript', 'jQuery', 'Bootstrap', 'jPlayer', 'WaveSurfer.js', 'MixItUp'],
+    result: 'A working multi-page music website with functional audio playback, waveform display, and filterable content — used as practice for structuring and wiring together front-end libraries.'
+  },
+  myshop: {
+    cat: 'Web Development · Full-Stack (Front-End)',
+    title: 'MyShop — E-Commerce Web App',
+    overview: 'A full e-commerce web application built with Next.js and React, covering product browsing through checkout and a basic admin workflow.',
+    problem: 'Build an online store interface with realistic e-commerce flows: browsing and filtering products, managing a cart, checking out, handling user roles, and letting an admin manage the product catalog.',
+    solution: 'Built the app with Next.js (App Router) and React, using Context API for cart and auth state, search and category filtering on the product list, dedicated pages for product details, cart, checkout and its success state, login/register, a user dashboard, and an admin page for adding and removing products. Styled with Tailwind CSS.',
+    tech: ['Next.js', 'React', 'Tailwind CSS', 'Context API', 'JavaScript'],
+    result: 'A functional e-commerce demo covering the full customer journey (browse → cart → checkout) plus a role-based admin panel for product management.'
+  }
+};
+const modal = document.getElementById('project-modal');
+document.querySelectorAll('.proj-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const data = projectData[card.dataset.project];
+    if (!data) return;
+    document.getElementById('m-cat').textContent = data.cat;
+    document.getElementById('m-title').textContent = data.title;
+    document.getElementById('m-overview').textContent = data.overview;
+    document.getElementById('m-problem').textContent = data.problem;
+    document.getElementById('m-solution').textContent = data.solution;
+    document.getElementById('m-result').textContent = data.result;
+    const techWrap = document.getElementById('m-tech');
+    techWrap.innerHTML = '';
+    data.tech.forEach(t => {
+      const span = document.createElement('span');
+      span.className = 'chip';
+      span.textContent = t;
+      techWrap.appendChild(span);
+    });
+    modal.classList.add('open');
+  });
+});
+document.getElementById('modal-close').addEventListener('click', () => modal.classList.remove('open'));
+document.getElementById('modal-backdrop').addEventListener('click', () => modal.classList.remove('open'));
+
+// ---------- CERTIFICATE IMAGE MODAL ----------
+const certModal = document.getElementById('cert-modal');
+const certModalImg = document.getElementById('cert-modal-img');
+const certModalCaption = document.getElementById('cert-modal-caption');
+
+document.querySelectorAll('.cert-clickable').forEach(card => {
+  card.addEventListener('click', () => {
+    const imgSrc = card.getAttribute('data-img');
+    const title = card.getAttribute('data-title');
+    certModalImg.src = imgSrc;
+    certModalCaption.textContent = title;
+    certModal.classList.add('open');
+  });
+});
+
+const closeCertModal = () => certModal.classList.remove('open');
+document.getElementById('cert-modal-close').addEventListener('click', closeCertModal);
+document.getElementById('cert-modal-backdrop').addEventListener('click', closeCertModal);
+
+document.addEventListener('keydown', (e) => { 
+  if (e.key === 'Escape') {
+    modal.classList.remove('open');
+    certModal.classList.remove('open');
+  } 
+});
+
+// ---------- STAR CANVAS BACKGROUND ----------
+const canvas = document.getElementById('star-canvas');
+const ctx = canvas.getContext('2d');
+let stars = [];
+function resizeCanvas(){
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  const count = Math.floor((canvas.width * canvas.height) / 9000);
+  stars = Array.from({length: count}, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.3 + 0.2,
+    a: Math.random(),
+    speed: Math.random() * 0.012 + 0.003
+  }));
+}
+let mx = 0, my = 0;
+window.addEventListener('mousemove', (e) => {
+  mx = (e.clientX / window.innerWidth - 0.5) * 14;
+  my = (e.clientY / window.innerHeight - 0.5) * 14;
+});
+function drawStars(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  stars.forEach(s => {
+    s.a += s.speed;
+    const twinkle = (Math.sin(s.a) + 1) / 2;
+    ctx.beginPath();
+    ctx.arc(s.x + mx, s.y + my, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(234,231,220,${0.15 + twinkle * 0.55})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(drawStars);
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+drawStars();
+</script>
+</body>
+</html>
