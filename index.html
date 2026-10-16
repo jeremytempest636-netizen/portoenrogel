@@ -663,6 +663,12 @@
           <span>Spring MVC</span>
           <span>REST API</span>
           <span>API Integration</span>
+          <span>WebSocket</span>
+          <span>Real-Time Communication</span>
+          <span>Real-Time Application Development</span>
+          <span>Real-Time Collaboration</span>
+          <span>Multi-User Application Development</span>
+          <span>Shared Workspace</span>
           <span>JSON</span>
           <span>Axios</span>
           <span>Zustand</span>
@@ -703,6 +709,8 @@
           <span>Infrastructure as Code</span>
           <span>Container Troubleshooting</span>
           <span>Service Orchestration</span>
+          <span>Multi-Service Application Architecture</span>
+          <span>Service Connectivity Troubleshooting</span>
           <span>Container Lifecycle Management</span>
         </div>
       </div>
@@ -736,6 +744,7 @@
         <div class="skill-tags">
           <span>MySQL</span>
           <span>PostgreSQL</span>
+          <span>Redis</span>
           <span>MongoDB</span>
           <span>SQL</span>
           <span>Prisma</span>
@@ -744,6 +753,7 @@
           <span>Active Record</span>
           <span>Database Design</span>
           <span>Database Management</span>
+          <span>Database Configuration Troubleshooting</span>
           <span>Database Querying</span>
           <span>Data Modeling</span>
           <span>Database Migrations</span>
@@ -840,6 +850,17 @@
       <p class="section-sub">Click a card for the full breakdown — problem, solution, and result.</p>
     </div>
     <div class="proj-grid reveal">
+
+      <div class="proj-card" data-project="whiteboard">
+        <div class="proj-art art-4"><span class="art-tag">Real-Time Systems / Full-Stack</span></div>
+        <div class="proj-body">
+          <div class="proj-cat">Go · WebSocket · Real-Time Collaboration</div>
+          <div class="proj-title">Whiteboard SaaS — Real-Time Collaborative Whiteboard</div>
+          <div class="proj-desc">A real-time collaborative whiteboard that allows multiple users to join the same board, draw together, and see changes live across separate browser sessions. Built with a multi-service architecture and containerized development environment.</div>
+          <div class="proj-tags"><span>Go (Golang)</span><span>Next.js</span><span>WebSocket</span><span>PostgreSQL</span><span>Redis</span><span>Docker Compose</span><span>Nginx</span></div>
+          <div class="proj-more">View details →</div>
+        </div>
+      </div>
 
       <div class="proj-card" data-project="nexus">
         <div class="proj-art art-1"><span class="art-tag">DevOps / AI Platform</span></div>
@@ -1363,6 +1384,26 @@ updateTimelineProgress();
 
 // ---------- PROJECT MODAL (UPDATED) ----------
 const projectData = {
+  whiteboard: {
+    cat: 'Go · WebSocket · Real-Time Collaboration',
+    title: 'Whiteboard SaaS — Real-Time Collaborative Whiteboard',
+    overview: 'A real-time collaborative whiteboard that allows multiple users to join the same board, draw together, and see changes live across separate browser sessions.',
+    problem: 'Collaborative work across separate browser sessions requires a shared workspace where multiple users can interact with the same board and see each other’s changes without manually refreshing the page.',
+    solution: 'Built a full-stack collaborative whiteboard using a Go backend, Next.js frontend, and WebSocket-based real-time communication. Configured a multi-service Docker Compose environment with PostgreSQL, Redis, and Nginx. Tested collaboration using two separate user sessions, with both users able to access the same board and see drawing activities live.',
+    tech: [
+      'Go (Golang)',
+      'Next.js',
+      'WebSocket',
+      'Real-Time Communication',
+      'PostgreSQL',
+      'Redis',
+      'Docker',
+      'Docker Compose',
+      'Nginx'
+    ],
+    result: 'Successfully demonstrated real-time collaboration between two separate user sessions on the same whiteboard. Both users can observe and participate in shared board activities live.'
+  },
+
   nexus: {
     cat: 'DevOps · Infrastructure · AI',
     title: 'NEXUS — Intelligent Infrastructure & Application Platform',
@@ -1485,6 +1526,7 @@ if (modal) {
     card.addEventListener('click', () => {
       const projectKey = card.dataset.project;
       const data = projectData[projectKey];
+
       if (!data) return;
 
       if (mCat) mCat.textContent = data.cat;
